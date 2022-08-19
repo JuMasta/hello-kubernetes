@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+    kubernetes.io/ingress-class: nginx
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+  generation: 1
+  name: {{ include "hello-kubernetes.name" . }}
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: hello-app.nbulatov.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ include "hello-kubernetes.name" . }}
+            port:
+              number: 443
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - hello-app.nbulatov.com
+    secretName: hello-app-secret
