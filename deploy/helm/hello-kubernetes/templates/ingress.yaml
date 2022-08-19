@@ -17,7 +17,7 @@ spec:
           service:
             name: {{ include "hello-kubernetes.name" . }}
             port:
-              number: 443
+              number: 80
         path: /
         pathType: Prefix
   tls:
